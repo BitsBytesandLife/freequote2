@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Multisteps Form</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="finalVersionStyle.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+        <script src="finalVersionScript.js"></script>
+
+
+    </head>
+
+    <body style="background-color: darkslategray;">
+        <h1 style="margin-top:50px; color: white;">Next up, some of the basics</h1>
+        <p style="margin-top:10px; color: white; text-align: center;">This information helps us find the best insurers
+            for you.</p>
+        <form id="myForm" action="finalVersionIndex.html" method="POST">
+
+            <div class="tab">
+                <h4 style='color:green;'>Submitted Successfully.</h4>
+            </div>
+           
+
+
+            <div style="overflow:auto;">
+                <div style="float:right; margin-top: 5px;">
+                    <button type="submit" name="submit" class="submit">Refresh</button>
+                </div>
+            </div>
+
+
+        </form>
+    </body>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.validator.addMethod('dob', function (value, element, param) {
+                return (value != 0) && (value <= 31) && (value == parseInt(value, 10));
+            }, 'Please enter a valid date!');
+
+
+            var val = {
+                // Specify validation rules
+                rules: {
+                    fname: "required",
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    zip: "required",
+                    dob: "required",
+                    gender: "required",
+                    heightft: "required",
+                    heightin: "required",
+                    weight: "required",
+                    citizenship: "required",
+                    income: "required",
+                    useTobbaco: "required"
+                },
+                // Specify validation error messages
+                messages: {
+                    fname: "First name is required",
+                    email: {
+                        required: "Email is required",
+                        email: "Please enter a valid e-mail",
+                    },
+                    zip: {
+                        required: "Zip is required."
+                    },
+                    dob: {
+                        required: "Plese enter Date of Birth"
+                    },
+                    gender: {
+                        required: "Select a gender"
+                    },
+                    heightft: {
+                        required: "Enter feets."
+                    },
+                    heightin: {
+                        required: "Enter inches."
+                    },
+                    weight: {
+                        required: "Enter Weight."
+                    },
+                    citizenship: {
+                        required: "Please select one."
+                    },
+                    income: {
+                        required: "Please enter Income."
+                    },
+                    useTobbaco: {
+                        required: "Please select this field."
+                    }
+                }
+            }
+            $("#myForm").multiStepForm(
+                {
+                    // defaultStep:0,
+                    beforeSubmit: function (form, submit) {
+                        console.log("called before submiting the form");
+                        console.log(form);
+                        console.log(submit);
+                    },
+                    validations: val,
+                }
+            ).navigateTo(0);
+        });
+
+
+    </script>
+
+</html>
